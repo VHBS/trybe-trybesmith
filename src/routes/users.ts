@@ -1,10 +1,10 @@
 import { Router } from 'express';
 import UserController from '../controllers/users';
-import ValidateUsers from '../middlewares/users';
+import UserMiddlware from '../middlewares/users';
 
 const router = Router();
 const userController = new UserController();
-const userMiddleware = new ValidateUsers();
+const userMiddleware = new UserMiddlware();
 
 router.post('/', userMiddleware.create, userController.create);
 

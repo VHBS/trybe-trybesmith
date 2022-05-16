@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import create from '../validations/products';
 
-export default class ValidateProducts {
+export default class ProductsMiddleware {
   public createValidate; 
 
   constructor() {

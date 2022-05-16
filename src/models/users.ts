@@ -17,4 +17,13 @@ export default class UserModel {
 
     return insertId;
   };
+
+  public authorization = async ({ username, password }: IUser): Promise<IUser[]> => {
+    const [user] = await this.connection.execute(
+      'SELECT * FROM Trybesmith.Users WHERE username = ? AND password = ?',
+      [username, password],
+    );
+
+    return user as IUser[];
+  };
 }
