@@ -1,4 +1,5 @@
 import { IProduct } from '../interfaces/product';
+import { IServiceProduct } from '../interfaces/services';
 import ProductModel from '../models/products';
 
 export default class ProductService {
@@ -8,13 +9,14 @@ export default class ProductService {
     this.model = new ProductModel();
   }
 
-  public getAll = async (): Promise<IProduct[]> => {
+  public getAll = async (): Promise<IServiceProduct> => {
     const products = await this.model.getAll();
-    return products;
+
+    return { code: 200, products };
   };
 
-  public create = async ({ name, amount }: IProduct): Promise<IProduct> => {
-    const newProduct = await this.model.create({ name, amount });
-    return newProduct;
+  public create = async ({ name, amount }: IProduct): Promise<IServiceProduct> => {
+    const products = await this.model.create({ name, amount });
+    return { code: 201, products };
   };
 }

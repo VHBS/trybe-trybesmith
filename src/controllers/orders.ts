@@ -11,8 +11,8 @@ export default class OrderController {
   public getAll = async (_req: Request, res: Response, next: NextFunction):
   Promise<Response | void> => {
     try {
-      const products = await this.service.getAll();
-      return res.status(200).json(products);
+      const result = await this.service.getAll();
+      return res.status(result.code).json(result.orders);
     } catch (error) {
       next(error);
     }

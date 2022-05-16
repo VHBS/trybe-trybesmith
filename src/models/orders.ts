@@ -11,7 +11,7 @@ export default class OrderModel {
   public getAll = async (): Promise<IOrder[]> => {
     const [orders] = await this.connection.execute('SELECT * FROM Trybesmith.Orders');
 
-    const teste = await Promise.all(Object.values(orders).map(async (order) => {
+    const result = await Promise.all(Object.values(orders).map(async (order) => {
       const [products] = await this.connection.execute(
         'SELECT * FROM Trybesmith.Products WHERE orderId = ?',
         [order.id],
@@ -22,6 +22,6 @@ export default class OrderModel {
       return { ...order, productsIds };
     }));
 
-    return teste as IOrder[];
+    return result as IOrder[];
   };
 }

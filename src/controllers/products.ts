@@ -11,8 +11,8 @@ export default class ProductController {
   public getAll = async (_req: Request, res: Response, next: NextFunction):
   Promise<Response | void> => {
     try {
-      const products = await this.service.getAll();
-      return res.status(200).json(products);
+      const result = await this.service.getAll();
+      return res.status(result.code).json(result.products);
     } catch (error) {
       next(error);
     }
@@ -22,8 +22,8 @@ export default class ProductController {
   Promise<Response | void> => {
     try {
       const { name, amount } = req.body;
-      const newProduct = await this.service.create({ name, amount });
-      return res.status(201).json(newProduct);
+      const result = await this.service.create({ name, amount });
+      return res.status(result.code).json(result.products);
     } catch (error) {
       next(error);
     }

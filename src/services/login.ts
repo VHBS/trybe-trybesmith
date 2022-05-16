@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import UserModel from '../models/users';
 import jwtConfig from '../jwt';
 import { IUser } from '../interfaces/users';
-import IService from '../interfaces/services';
+import { IServiceMessage } from '../interfaces/services';
 
 export default class LoginService {
   public model: UserModel;
@@ -11,7 +11,7 @@ export default class LoginService {
     this.model = new UserModel();
   }
 
-  public getToken = async ({ username, password }: IUser):Promise<IService> => {
+  public getToken = async ({ username, password }: IUser):Promise<IServiceMessage> => {
     const products = await this.model.authorization({ username, password });
 
     if (products.length === 0) {
