@@ -1,3 +1,4 @@
+import { IOrderCreate } from '../interfaces/orders';
 import { IServiceOrder } from '../interfaces/services';
 import OrderModel from '../models/orders';
 
@@ -12,4 +13,10 @@ export default class OrderService {
     const orders = await this.model.getAll();
     return { code: 200, orders };
   };
+
+  public create = async ({ productsIds, userId }: IOrderCreate):Promise<IServiceOrder> => {
+    console.log('service Order', userId);
+    const orders = await this.model.create({ productsIds, userId });
+    return { code: 201, orders };
+  }; 
 }

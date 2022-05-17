@@ -12,16 +12,17 @@ export default class LoginService {
   }
 
   public getToken = async ({ username, password }: IUser):Promise<IServiceMessage> => {
-    const products = await this.model.authorization({ username, password });
+    const [user] = await this.model.authorization({ username, password });
 
-    if (products.length === 0) {
+    if (!user) {
       return {
         code: 401,
         message: { message: 'Username or password invalid' },
       };
     }
+    // console.log(user.id);
 
-    const token = jwt.sign({ data: username }, 'trybesmith', jwtConfig);
+    const token = jwt.sign({ data: { username, id: user.id } }, 'trybesmith', jwtConfig);
     return { code: 200, message: { token } };
   };
 }

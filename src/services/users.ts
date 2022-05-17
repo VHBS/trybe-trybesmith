@@ -17,4 +17,11 @@ export default class UserService {
 
     return token;
   };
+
+  public authorization = async ({ username, password }: IUser): Promise<IUser[]> => {
+    const user = await this.model.authorization({ username, password });
+    // console.log(user);
+
+    return user as IUser[];
+  };
 }

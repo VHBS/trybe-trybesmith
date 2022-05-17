@@ -1,4 +1,5 @@
-import IOrder from '../interfaces/orders';
+import { ResultSetHeader } from 'mysql2/promise';
+import { IOrder, IOrderCreate } from '../interfaces/orders';
 import connection from './connection';
 
 export default class OrderModel {
@@ -23,5 +24,25 @@ export default class OrderModel {
     }));
 
     return result as IOrder[];
+  };
+
+  public create = async ({ productsIds, userId }: IOrderCreate): Promise<IOrderCreate> => {
+    console.log(userId);
+    await Promise.all(
+      productsIds.map(async (id) => {
+        const [{ insertId }] = await this.connection.execute<ResultSetHeader>(
+          'INSERT INTO Trybesmith.Orders (userId) VALUES (?)',
+          [userId],
+        );
+        
+        await this.connection.execute(
+          'UPDATE Trybesmith.Products SET orderId = ? WHERE id = ?',
+          [insertId, id],
+        );
+        return insertId;
+      }),
+    );
+
+    return { productsIds, userId };
   };
 }

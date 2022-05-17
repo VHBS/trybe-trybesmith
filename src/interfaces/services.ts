@@ -1,4 +1,4 @@
-import IOrder from './orders';
+import { IOrder } from './orders';
 import { IProduct } from './product';
 
 type Message = { message: string };
@@ -11,7 +11,7 @@ export interface IServiceMessage {
 
 export interface IServiceOrder {
   code: number
-  orders: IOrder[]
+  orders: IOrder[] | IOrder
 }
 
 export interface IServiceProduct {
